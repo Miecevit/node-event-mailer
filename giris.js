@@ -68,6 +68,7 @@ http.createServer(function (req, res){
             }
             else if(giris == false)
             {
+                console.log("Giris Yapilamadi.");
                 var mailOption = 
                     {
                         from: 'badem3444@hotmail.com',
@@ -76,12 +77,15 @@ http.createServer(function (req, res){
                         text: 'Sistemimiz üzerinde varolan hesabiniza yanlis bir sifre giris denendi.'
                     }
                 con.query(sql_notpass, function(err, result){
-                    console.log("Kullanici adi dogru ancak sifre hatali!");
+                    if(result.length > 0){
+                        console.log("Kullanici adi dogru ancak sifre hatali!");
 
                     transporter.sendMail(mailOption, function(err, info){
                         if(err) throw err;
                         console.log("Mail gonderildi.");
                     })
+                    }
+                    
                 })
             }
             
